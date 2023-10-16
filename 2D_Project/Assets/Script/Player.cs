@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     {
         inputvec.x = Input.GetAxisRaw("Horizontal");
         inputvec.y = Input.GetAxisRaw("Vertical");
-        run = Input.GetKey(KeyCode.LeftShift) ? 1.3f : 1;
+        
 
         if(Input.GetButtonDown("Horizontal"))
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == 1;
@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
             anim.SetBool("Test", false);
         else
             anim.SetBool("Test", true);
+
+        run = Input.GetKey(KeyCode.LeftShift) ? 1.3f : 1;
     }
 
     private void FixedUpdate()
