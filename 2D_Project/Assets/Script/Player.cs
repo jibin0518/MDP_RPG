@@ -1,44 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class Player : MonoBehaviour
 {
-    public Vector2 inputvec;
+    public Vector2 Inputvec;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
-    Animator anim;
+    Animator aim;
+
+    public int hp;
     public float spd;
-    public float run;
 
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        inputvec.x = Input.GetAxisRaw("Horizontal");
-        inputvec.y = Input.GetAxisRaw("Vertical");
-        
-
-        if(Input.GetButtonDown("Horizontal"))
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == 1;
-        if (rigid.velocity.normalized.x == 0)
-            anim.SetBool("Test", false);
-        else
-            anim.SetBool("Test", true);
-
-        run = Input.GetKey(KeyCode.LeftShift) ? 1.3f : 1;
+        aim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
-        Vector2 nextvec = inputvec.normalized * spd * Time.fixedDeltaTime * run;
+        Vector2 nextvec = Inputvec.normalized * spd * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextvec);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            aim.SetTrigger("Atk");
+        }
+    }
+
+    void OnMove(InputValue value)
+    {
+        Inputvec = value.Get<Vector2>();
+    }
+
+    /*void OnClickLeftMouse(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if(context.interaction is PressInteraction)
+            {
+                aim.SetTrigger("Atk");
+            }
+        }
+    }*/
+
+    void LateUpdate()
+    {
+        aim.SetFloat("Spd", Inputvec.magnitude);
+
+        if (Inputvec.x != 0)
+        {
+            spriteRenderer.flipX = Inputvec.x < 0;
+        }
     }
 }
