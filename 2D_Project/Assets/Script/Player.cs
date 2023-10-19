@@ -11,12 +11,19 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator aim;
 
-    public int hp;
+    [SerializeField]
+    int maxHp;
+
+    int curHp;
     public float spd;
 
+    public int CurHp { get => curHp; set => curHp = value; }
+
+    public int MaxHp { get => maxHp; set => maxHp = value; }
 
     void Awake()
     {
+        curHp = maxHp;
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         aim = GetComponent<Animator>();
