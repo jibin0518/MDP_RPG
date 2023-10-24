@@ -11,10 +11,12 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator aim;
 
+    GameManger Manger;
+
     [SerializeField]
     int maxHp;
 
-    int curHp;
+    public int curHp;
     public float spd;
 
     public int CurHp { get => curHp; set => curHp = value; }
@@ -63,6 +65,22 @@ public class Player : MonoBehaviour
         if (Inputvec.x != 0)
         {
             spriteRenderer.flipX = Inputvec.x < 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Safe_Local")
+        {
+           
+        }
+        if (collision.gameObject.tag == "Danger_Local")
+        {
+
+        }
+        if (collision.gameObject.tag == "Boss_Local")
+        {
+
         }
     }
 }
