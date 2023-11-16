@@ -5,7 +5,7 @@ using UnityEngine;
 public class HpbarSystem : MonoBehaviour
 {
     [SerializeField]
-    Player palyer;
+    HeroKnight palyer;
 
     [SerializeField]
     RectTransform hpbar;
@@ -15,7 +15,7 @@ public class HpbarSystem : MonoBehaviour
     private void Awake()
     {
         widthOrigin = hpbar.rect.width;
-        Debug.Log(widthOrigin);
+        //Debug.Log(widthOrigin);
     }
 
     private void Update()
@@ -25,8 +25,7 @@ public class HpbarSystem : MonoBehaviour
 
     public void SetHpBar()
     {
-        hpbar.sizeDelta = new Vector2((widthOrigin * ((float)palyer.CurHp / palyer.MaxHp)),
-            hpbar.sizeDelta.y);
+        hpbar.sizeDelta = new Vector2((widthOrigin * ((float)palyer.CurHp / palyer.MaxHp)),hpbar.sizeDelta.y);
     }
 
 

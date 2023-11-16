@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     public float spd;
-    public Rigidbody2D target;
 
     bool islive = true;
+    public bool targetting = false;
+    public int nextMove;
+    public int targetcount=0;
 
+    public Transform target;
+    
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
+    Vector2 dir;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        Invoke("Think", 0.3f);
     }
 
     // Update is called once per frame
@@ -25,10 +32,22 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        Vector2 dirvec = target.position - rigid.position;
-        Vector2 nextvec = dirvec.normalized * spd * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextvec);
-        rigid.velocity = Vector2.zero;
+    }
+
+    void FixedUpdate()
+    {
+        if (targetting)
+        {
+            dir = target.position - transform.position;
+            transform.Translate(dir.normalized * spd * Time.deltaTime);
+        }
+    }
+
+    void Think()
+    {
+        nextMove = Random.Range(-1, 2);
+
+        //Invoke("Think", 1);
     }
 
     private void LateUpdate()
@@ -38,5 +57,13 @@ public class Enemy : MonoBehaviour
             return;
         }
         spriteRenderer.flipX = target.position.x < rigid.position.x;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            targetting = true;
+        }
     }
 }
