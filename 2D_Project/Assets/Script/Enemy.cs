@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 
     bool islive = true;
     public bool targetting = false;
-    public int nextMove;
+    //public int nextMove;
     public int targetcount=0;
 
     public Transform target;
@@ -22,16 +22,12 @@ public class Enemy : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Invoke("Think", 0.3f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!islive)
-        {
-            return;
-        }
+        Think();
     }
 
     void FixedUpdate()
@@ -45,9 +41,20 @@ public class Enemy : MonoBehaviour
 
     void Think()
     {
-        nextMove = Random.Range(-1, 2);
+        int a = (int)transform.position.x + 5;
+        int b = (int)transform.position.x - 5;
+        int player_position = (int)target.position.x;
 
-        //Invoke("Think", 1);
+        if(a>player_position && b < player_position)
+        {
+            targetting = true;
+            //Debug.Log("check");
+        }
+        else
+        {
+            //Debug.Log("uncheck");
+            targetting = false;
+        }
     }
 
     private void LateUpdate()
@@ -59,11 +66,12 @@ public class Enemy : MonoBehaviour
         spriteRenderer.flipX = target.position.x < rigid.position.x;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
             targetting = true;
+            targetcount++;
         }
-    }
+    }*/
 }

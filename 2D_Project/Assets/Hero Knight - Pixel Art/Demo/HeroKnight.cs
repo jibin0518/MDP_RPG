@@ -49,7 +49,7 @@ public class HeroKnight : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        if (CurHp >= 0)
+        if (CurHp > 0)
         {
             deathing = true;
         }
@@ -149,7 +149,7 @@ public class HeroKnight : MonoBehaviour {
             m_animator.SetBool("IdleBlock", false);
 
         // Roll
-        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
+        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding && m_body2d.velocity!=Vector2.zero)
         {
             m_rolling = true;
             m_animator.SetTrigger("Roll");
@@ -188,7 +188,7 @@ public class HeroKnight : MonoBehaviour {
 
     // Animation Events
     // Called in slide animation.
-    void AE_SlideDust()
+    /*void AE_SlideDust()
     {
         Vector3 spawnPosition;
 
@@ -204,13 +204,17 @@ public class HeroKnight : MonoBehaviour {
             // Turn arrow in correct direction
             dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
         }
-    }
+    }*/
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             isJump = true;
+        }
+        if(collision.gameObject.tag == "Enemy" && CurHp>0)
+        {
+            CurHp -= 20;
         }
     }
 }
