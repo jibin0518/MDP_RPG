@@ -15,7 +15,6 @@ public class HpbarSystem : MonoBehaviour
     private void Awake()
     {
         widthOrigin = hpbar.rect.width;
-        //Debug.Log(widthOrigin);
     }
 
     private void Update()

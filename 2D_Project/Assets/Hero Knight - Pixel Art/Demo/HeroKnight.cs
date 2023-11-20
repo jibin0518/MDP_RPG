@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.ComponentModel;
 
 public class HeroKnight : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] float      m_rollForce = 1f;
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
+    public GameObject bullet_position;
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
@@ -29,10 +31,13 @@ public class HeroKnight : MonoBehaviour {
     public float CurHp = 100;
     public float MaxHp = 100;
 
-    private bool deathing;
+    private float roll_speed = 1;
 
-    public bool isJump;
-    
+    public bool deathing;
+
+    private bool isJump;
+
+    public GameObject missilePrefab;
 
     // Use this for initialization
     void Start ()
@@ -60,10 +65,6 @@ public class HeroKnight : MonoBehaviour {
         if(m_rolling)
             m_rollCurrentTime += Time.deltaTime;
 
-        // Disable rolling if timer extends duration
-        if(m_rollCurrentTime > m_rollDuration)
-            m_rolling = false;
-
         //Check if character just landed on the ground
         if (!m_grounded && m_groundSensor.State())
         {
@@ -82,41 +83,36 @@ public class HeroKnight : MonoBehaviour {
         float inputX = Input.GetAxis("Horizontal");
 
         // Swap direction of sprite depending on walk direction
-        if (inputX > 0)
+        if (inputX > 0 && deathing)
         {
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
         }
             
-        else if (inputX < 0)
+        else if (inputX < 0 && deathing)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
         }
 
         // Move
-        if (!m_rolling )
+        if (!m_rolling && deathing)
             m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
 
         //Set AirSpeed in animator
         m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
 
-        // -- Handle Animations --
-        //Wall Slide
-        m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
-        m_animator.SetBool("WallSlide", m_isWallSliding);
-
         //Death
-        if (/*Input.GetKeyDown("e") && !m_rolling*/CurHp<=0 && deathing)
+        if (CurHp<=0 && deathing)
         {
-            //m_animator.SetBool("noBlood", m_noBlood);
             m_animator.SetTrigger("Death");
             deathing = false;
         }
-            
-        //Hurt
-        else if (Input.GetKeyDown("q") && !m_rolling)
-            m_animator.SetTrigger("Hurt");
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            GameObject missile = Instantiate(missilePrefab, bullet_position.transform.position, transform.rotation);
+        }
 
         //Attack
         else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
@@ -149,11 +145,13 @@ public class HeroKnight : MonoBehaviour {
             m_animator.SetBool("IdleBlock", false);
 
         // Roll
-        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding && m_body2d.velocity!=Vector2.zero)
+        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding && m_body2d.velocity!=Vector2.zero && isJump)
         {
             m_rolling = true;
             m_animator.SetTrigger("Roll");
-            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
+            roll_speed = 7;
+            m_body2d.velocity = new Vector2(m_facingDirection * /*m_rollForce **/ roll_speed, m_body2d.velocity.y);
+            Invoke("Roll_Delay", m_rollDuration);
         }
             
 
@@ -186,9 +184,15 @@ public class HeroKnight : MonoBehaviour {
         }
     }
 
+    void Roll_Delay()
+    {
+        roll_speed = 1;
+        m_rolling = false;
+    }
+
     // Animation Events
     // Called in slide animation.
-    /*void AE_SlideDust()
+    void AE_SlideDust()
     {
         Vector3 spawnPosition;
 
@@ -204,7 +208,7 @@ public class HeroKnight : MonoBehaviour {
             // Turn arrow in correct direction
             dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
         }
-    }*/
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -215,6 +219,7 @@ public class HeroKnight : MonoBehaviour {
         if(collision.gameObject.tag == "Enemy" && CurHp>0)
         {
             CurHp -= 20;
+            m_animator.SetTrigger("Hurt");
         }
     }
 }

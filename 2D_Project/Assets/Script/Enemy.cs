@@ -65,13 +65,4 @@ public class Enemy : MonoBehaviour
         }
         spriteRenderer.flipX = target.position.x < rigid.position.x;
     }
-
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            targetting = true;
-            targetcount++;
-        }
-    }*/
 }
