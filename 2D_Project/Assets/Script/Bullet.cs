@@ -9,11 +9,11 @@ public class Bullet : MonoBehaviour
     private float lifetime = 1.5f;  // 미사일 수명 (초)
     private float spawnTime;  // 미사일 생성 시간
     public int bulletDirection;
-    HeroKnight player;
+    private int finDirection = 0;
+    public HeroKnight player;
 
     void Start()
     {
-        player = GetComponent<HeroKnight>();
         spawnTime = Time.time;  // 현재 시간을 저장
     }
 
@@ -22,12 +22,17 @@ public class Bullet : MonoBehaviour
 
         if(player.GetComponent<SpriteRenderer>().flipX == true)
         {
-            transform.Translate(transform.right * speed * Time.deltaTime);
+            transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
+            Debug.Log("오른");
         }
-        else
+        else if(player.GetComponent<SpriteRenderer>().flipX == false)
         {
-            transform.Translate(transform.right * -1 * speed * Time.deltaTime);
+            transform.position += new Vector3(speed * Time.deltaTime * -1, 0, 0);
+            Debug.Log("왼");
         }
+
+        //transform.position += new Vector3(speed*Time.deltaTime * bulletDirection, 0,0);
+
 
         // 미사일의 수명이 다 되면 삭제
         if (Time.time - spawnTime > lifetime)
