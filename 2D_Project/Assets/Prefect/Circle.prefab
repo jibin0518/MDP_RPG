@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6827226124748897886}
   - component: {fileID: 6038951906553115965}
   - component: {fileID: 7736208268126423249}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  bulletDirection: 1
+  bulletDirection: -1
   player: {fileID: 3026079502902960442, guid: 43830f5f1fcd1834bad491f70952ae4e, type: 3}
 --- !u!50 &6038951906553115965
 Rigidbody2D:
