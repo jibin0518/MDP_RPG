@@ -11,8 +11,6 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] GameObject m_slideDust;
     public GameObject bullet_position;
 
-    public Bullet bullet;
-
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
     private Sensor_HeroKnight   m_groundSensor;
@@ -113,29 +111,11 @@ public class HeroKnight : MonoBehaviour {
             deathing = false;
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            GameObject missile = Instantiate(missilePrefab, bullet_position.transform.position, transform.rotation);
-        }
-
         //Attack
-        else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
+        else if(Input.GetMouseButtonDown(0) && !m_rolling)
         {
-            m_currentAttack++;
-
-            // Loop back to one after third attack
-            if (m_currentAttack > 3)
-                m_currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (m_timeSinceAttack > 1.0f)
-                m_currentAttack = 1;
-
-            // Call one of three attack animations "Attack1", "Attack2", "Attack3"
-            m_animator.SetTrigger("Attack" + m_currentAttack);
-
-            // Reset timer
-            m_timeSinceAttack = 0.0f;
+            m_animator.SetTrigger("Attack");
+            GameObject missile = Instantiate(missilePrefab, bullet_position.transform.position, transform.rotation);
         }
 
         // Block
