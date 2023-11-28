@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour
     {
         if (curhp <= 0)
         {
-            Destroy(enemy_Body);
+            Destroy(enemy_Body,1);
         }
     }
 }
