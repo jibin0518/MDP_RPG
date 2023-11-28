@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7736208268126423249}
   m_Layer: 3
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  bulletDirection: -1
+  bulletDirection: 1
   player: {fileID: 3026079502902960442, guid: 43830f5f1fcd1834bad491f70952ae4e, type: 3}
 --- !u!50 &6038951906553115965
 Rigidbody2D:

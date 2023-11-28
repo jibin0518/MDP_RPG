@@ -9,11 +9,14 @@ public class Enemy : MonoBehaviour
 
     bool islive = true;
     public bool targetting = false;
-    //public int nextMove;
     public int targetcount=0;
 
     public Transform target;
-    
+
+    public float maxhp=100;
+    public float curhp=100;
+
+    Renderer enemy_Body;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Vector2 dir;
@@ -22,12 +25,14 @@ public class Enemy : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        enemy_Body = gameObject.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Think();
+        death();
     }
 
     void FixedUpdate()
@@ -41,18 +46,16 @@ public class Enemy : MonoBehaviour
 
     void Think()
     {
-        int a = (int)transform.position.x + 5;
-        int b = (int)transform.position.x - 5;
+        int a = (int)transform.position.x + 10;
+        int b = (int)transform.position.x - 10;
         int player_position = (int)target.position.x;
 
         if(a>player_position && b < player_position)
         {
             targetting = true;
-            //Debug.Log("check");
         }
         else
         {
-            //Debug.Log("uncheck");
             targetting = false;
         }
     }
@@ -64,5 +67,28 @@ public class Enemy : MonoBehaviour
             return;
         }
         spriteRenderer.flipX = target.position.x < rigid.position.x;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Bullet")
+        {
+            curhp -= 20;
+            enemy_Body.material.color = Color.red;
+            Invoke("damage_delay",0.5f);
+        }
+    }
+
+    void damage_delay()
+    {
+        enemy_Body.material.color = Color.white;
+    }
+
+    void death()
+    {
+        if (curhp <= 0)
+        {
+            Destroy(enemy_Body);
+        }
     }
 }
