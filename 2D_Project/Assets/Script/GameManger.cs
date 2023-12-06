@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManger : MonoBehaviour
 {
-    public HeroKnight player;
+    public Player player;
     public Bullet bullet;
 
     void Start()
