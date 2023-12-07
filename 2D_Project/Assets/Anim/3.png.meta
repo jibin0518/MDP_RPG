@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 86f9325ac7b460340b29c828267db1fd
+guid: 9ae0d7ae31d43794f9a4ae2c19bee6c2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 0
+      name: Jump attack (1)_0
       rect:
         serializedVersion: 2
-        x: 142
-        y: 452
-        width: 120
-        height: 275
+        x: 129
+        y: 605
+        width: 242
+        height: 290
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,155 +124,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6bc7f1c4eff1054db2c3d6f0f50f397
-      internalID: 779961393
+      spriteID: 9eb1e16849dace6489c71ddcfce49b98
+      internalID: 1704916126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2
+      name: Jump attack (1)_1
       rect:
         serializedVersion: 2
-        x: 626
-        y: 437
-        width: 160
-        height: 280
+        x: 125
+        y: 125
+        width: 238
+        height: 270
       alignment: 9
-      pivot: {x: 0.6255913, y: 0.5}
+      pivot: {x: 0.6, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35267e82083f9c44099c4fe3a8f1436c
-      internalID: 1889264917
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 1
-      rect:
-        serializedVersion: 2
-        x: 396
-        y: 451
-        width: 140
-        height: 275
-      alignment: 9
-      pivot: {x: 0.55065876, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2721134ce99c8c542a9314061c4d47e7
-      internalID: -2069843857
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 4
-      rect:
-        serializedVersion: 2
-        x: 38
-        y: 89
-        width: 280
-        height: 300
-      alignment: 9
-      pivot: {x: 0.75, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6364879d0fa31c438df662ca58afbfd
-      internalID: 621137014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 5
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 77
-        width: 200
-        height: 300
-      alignment: 9
-      pivot: {x: 0.8, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 208cfd7165f6f8b4a9528f49852e2973
-      internalID: -1129501994
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 6
-      rect:
-        serializedVersion: 2
-        x: 663
-        y: 108
-        width: 140
-        height: 250
-      alignment: 9
-      pivot: {x: 0.9, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 85109b628310d854a88dff052d9d37b7
-      internalID: 1123857808
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 7
-      rect:
-        serializedVersion: 2
-        x: 883
-        y: 301
-        width: 50
-        height: 20
-      alignment: 9
-      pivot: {x: 1.8401904, y: -3.4007041}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c1df01a697cff4c4e87886c1183b53c8
-      internalID: 1902432402
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 3
-      rect:
-        serializedVersion: 2
-        x: 805
-        y: 420
-        width: 280
-        height: 300
-      alignment: 9
-      pivot: {x: 0.74484974, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 92f83ae72448144448a58462a93013e6
-      internalID: -350340039
+      spriteID: eebf2be2e974e5d41bdf9ad88644d7c8
+      internalID: -643600787
       vertices: []
       indices: 
       edges: []
@@ -288,14 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      0: 779961393
-      1: -2069843857
-      2: 1889264917
-      3: -350340039
-      4: 621137014
-      5: -1129501994
-      6: 1123857808
-      7: 1902432402
+      Jump attack (1)_0: 1704916126
+      Jump attack (1)_1: -643600787
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
