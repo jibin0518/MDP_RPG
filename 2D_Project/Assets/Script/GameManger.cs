@@ -7,11 +7,11 @@ public class GameManger : MonoBehaviour
 {
     public Player player;
     public Bullet bullet;
-    public Image a;
+    /*public Image a;
     public Image d;
     public Image space;
     public Image mouseleft;
-    public Image leftshift;
+    public Image leftshift;*/
 
     void Start()
     {
@@ -21,10 +21,10 @@ public class GameManger : MonoBehaviour
     void Update()
     {
         BulletDirection();
-        PlayerMove();
+        /*PlayerMove();
         PlayerJump();
         PlayerShotting();
-        PlayerRoll();
+        PlayerRoll();*/
     }
 
     void BulletDirection()
@@ -38,7 +38,7 @@ public class GameManger : MonoBehaviour
             bullet.bulletDirection = 1;
         }
     }
-    void PlayerMove()
+    /*void PlayerMove()
     {
         if (Input.GetKey(KeyCode.A))
         {
@@ -89,5 +89,5 @@ public class GameManger : MonoBehaviour
         {
             leftshift.color = Color.white;
         }
-    }
+    }*/
 }

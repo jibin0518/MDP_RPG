@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
 
     public bool deathing;
 
-    private bool isJump;
+    public bool isJump;
 
     public GameObject missilePrefab;
     Renderer player_body;
@@ -120,14 +120,15 @@ public class Player : MonoBehaviour {
             
 
         //Jumpf
-        if (Input.GetKeyDown("space") && m_grounded && !m_rolling && isJump)
+        if (Input.GetKeyDown("space") && m_grounded && !m_rolling && !isJump)
         {
+            Debug.Log("!!");
             m_animator.SetTrigger("Jump");
             m_grounded = false;
             m_animator.SetBool("Grounded", m_grounded);
             m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
             m_groundSensor.Disable(0.2f);
-            isJump = false;
+            isJump = true;
         }
 
         //Run
@@ -172,7 +173,7 @@ public class Player : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Ground")
         {
-            isJump = true;
+            isJump = false;
         }
         if(collision.gameObject.tag == "Enemy" && CurHp>0)
         {
