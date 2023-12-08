@@ -5,7 +5,7 @@ using UnityEngine;
 public class HpbarSystem : MonoBehaviour
 {
     [SerializeField]
-    HeroKnight palyer;
+    Player palyer;
 
     [SerializeField]
     RectTransform hpbar;

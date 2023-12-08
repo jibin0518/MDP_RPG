@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     private float lifetime = 1.5f;  // 미사일 수명 (초)
     private float spawnTime;  // 미사일 생성 시간
     public int bulletDirection;
-    public HeroKnight player;
+    public Player player;
 
     void Start()
     {
