@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Sensor_HeroKnight : MonoBehaviour {
 
-    public int m_ColCount = 0;
+    private int m_ColCount = 0;
 
-    public float m_DisableTimer;
+    private float m_DisableTimer;
 
     private void OnEnable()
     {
