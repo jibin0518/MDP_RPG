@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Think();
-        death();
     }
 
     void FixedUpdate()
@@ -82,13 +81,5 @@ public class Enemy : MonoBehaviour
     void damage_delay()
     {
         enemy_Body.material.color = Color.white;
-    }
-
-    void death()
-    {
-        if (curhp <= 0)
-        {
-            Destroy(enemy_Body,1);
-        }
     }
 }

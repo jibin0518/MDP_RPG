@@ -11,11 +11,15 @@ public class Boss : MonoBehaviour
     void Start()
     {
         player = GetComponent<Player>();
-        GameObject missile = Instantiate(buleltfire, bossbullet_position.transform.position, transform.rotation);
     }
 
     void Update()
     {
         
+    }
+
+    void EnemyFIre()
+    {
+        GameObject missile = Instantiate(buleltfire, bossbullet_position.transform.position, transform.rotation);
     }
 }
