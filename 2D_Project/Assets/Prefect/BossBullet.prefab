@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8307800081016844698, guid: 43830f5f1fcd1834bad491f70952ae4e, type: 3}
-  bulletspd: 5
+  bulletspd: 8
 --- !u!58 &3172055102102570503
 CircleCollider2D:
   m_ObjectHideFlags: 0

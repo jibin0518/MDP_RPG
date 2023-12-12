@@ -5,23 +5,27 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BossAttack : MonoBehaviour
 {
-    public Transform player;
+    Transform player;
     public float bulletspd;
-    Vector2 dir;
 
     void Start()
     {
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
-    void Update()
+
+    private void FixedUpdate()
     {
-        dir = player.position - transform.position;
-        transform.Translate(dir.normalized * bulletspd * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.position, bulletspd * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Bullet")
+        {
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
         }
