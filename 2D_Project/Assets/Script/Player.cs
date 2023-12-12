@@ -122,7 +122,6 @@ public class Player : MonoBehaviour {
         //Jumpf
         if (Input.GetKeyDown("space") && m_grounded && !m_rolling && !isJump)
         {
-            Debug.Log("!!");
             m_animator.SetTrigger("Jump");
             m_grounded = false;
             m_animator.SetBool("Grounded", m_grounded);
