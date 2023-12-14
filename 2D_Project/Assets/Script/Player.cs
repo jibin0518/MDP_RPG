@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 
 public class Player : MonoBehaviour {
 
@@ -170,16 +171,17 @@ public class Player : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "BossMissile" && CurHp > 0)
+        {
+            CurHp -= 20;
+            player_body.material.color = Color.red;
+            Invoke("Color_delay", 1);
+        }
         if (collision.gameObject.tag == "Ground")
         {
             isJump = false;
         }
-        if(collision.gameObject.tag == "Enemy" && CurHp>0)
-        {
-            CurHp -= 20;
-            player_body.material.color = Color.red;
-            Invoke("Color_delay",1);
-        }
+        
     }
 
     void Color_delay()

@@ -7,6 +7,7 @@ public class GameManger : MonoBehaviour
 {
     public Player player;
     public Bullet bullet;
+    //public Boss boss;
     /*public Image a;
     public Image d;
     public Image space;

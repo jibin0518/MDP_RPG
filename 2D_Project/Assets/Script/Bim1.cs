@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bim1 : MonoBehaviour
 {
-    public float speed = 10f;  // 미사일 이동 속도
+    public float speed = 20f;  // 미사일 이동 속도
     private float lifetime = 1.5f;  // 미사일 수명 (초)
     private float spawnTime;  // 미사일 생성 시간
-    public int bulletDirection;
-    public Player player;
+    public int BossBimDirection;
+    //public Player player;
 
     void Start()
     {
@@ -18,9 +18,8 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        transform.position += new Vector3(speed * Time.deltaTime * bulletDirection, 0, 0);
+        transform.position += new Vector3(speed * Time.deltaTime * 1, 0, 0);
 
-        // 미사일의 수명이 다 되면 삭제
         if (Time.time - spawnTime > lifetime)
         {
             Destroy(gameObject);
@@ -29,11 +28,8 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.tag == "BossMissle")
+
+        if (collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
         }
