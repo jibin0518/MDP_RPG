@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7051858986423969703}
   m_Layer: 0
   m_Name: Big Object
-  m_TagString: Untagged
+  m_TagString: BossMissile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

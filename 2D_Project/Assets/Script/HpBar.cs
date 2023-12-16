@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HpbarSystem : MonoBehaviour
+public class HpBar: MonoBehaviour
 {
     [SerializeField]
     Player palyer;
@@ -26,6 +26,4 @@ public class HpbarSystem : MonoBehaviour
     {
         hpbar.sizeDelta = new Vector2((widthOrigin * ((float)palyer.CurHp / palyer.MaxHp)),hpbar.sizeDelta.y);
     }
-
-
 }

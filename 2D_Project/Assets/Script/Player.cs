@@ -2,6 +2,8 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour {
 
@@ -22,22 +24,27 @@ public class Player : MonoBehaviour {
     private int                 m_currentAttack = 0;
     private float               m_timeSinceAttack = 0.0f;
     private float               m_delayToIdle = 0.0f;
-    private float               m_rollDuration = 8.0f / 14.0f;
+    private float               m_rollDuration = 8.0f / 16.0f;
     private float               m_rollCurrentTime;
     
     public float CurHp = 100;
     public float MaxHp = 100;
 
-    private float roll_speed = 1;
-
     public bool deathing;
 
     public bool isJump;
+
+    public int maxbullet;
+    public int curbullet;
+
+    bool reload;
 
     public GameObject missilePrefab;
     Renderer player_body;
 
     public bool firebool;
+
+    public float skillcnt=0;
 
     // Use this for initialization
     void Start ()
@@ -85,12 +92,14 @@ public class Player : MonoBehaviour {
         {
             GetComponent<SpriteRenderer>().flipX = false;
             m_facingDirection = 1;
+            m_animator.SetFloat("Move", inputX);
         }
             
         else if (inputX < 0 && deathing)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             m_facingDirection = -1;
+            m_animator.SetFloat("Move", inputX);
         }
 
         // Move
@@ -108,15 +117,16 @@ public class Player : MonoBehaviour {
         }
 
         Attack();
+        ReLoad();
+        Skill1();
 
         // Roll
-        if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding && m_body2d.velocity!=Vector2.zero && isJump)
+        if (Input.GetKeyDown("left shift") && !m_rolling)
         {
-            m_rolling = true;
+            m_body2d.velocity = Vector2.zero;
             m_animator.SetTrigger("Roll");
-            roll_speed = 7;
-            m_body2d.velocity = new Vector2(m_facingDirection * /*m_rollForce **/ roll_speed, m_body2d.velocity.y);
-            Invoke("Roll_Delay", m_rollDuration);
+            m_rolling = true;
+            Invoke("Roll_Delay", 0.3f);
         }
             
 
@@ -149,12 +159,50 @@ public class Player : MonoBehaviour {
         }
     }
 
+    void Skill1()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            m_body2d.velocity = Vector2.zero;
+            m_animator.SetBool("Razer_Skill",true);
+            skillcnt += 0.01f;
+        }
+        if (skillcnt == 10)
+        {
+            m_animator.SetTrigger("Razer_Fire");
+            skillcnt = 0;
+        }
+        else if (Input.GetKeyUp(KeyCode.E))
+        {
+            m_animator.SetBool("Razer_Skill", false);
+            skillcnt = 0;
+        }
+
+        
+    }
+
+    void ReLoad()
+    {
+        if (curbullet < maxbullet && !reload)
+        {
+            reload = true;
+            Invoke("ReLoad_Delay",0.9f);
+        }
+    }
+
+    void ReLoad_Delay()
+    {
+        curbullet++;
+        reload = false;
+    }
+
     void Attack()
     {
-        if (Input.GetMouseButtonDown(0) && !m_rolling)
+        if (Input.GetMouseButtonDown(0) && !m_rolling && !isJump && curbullet > 0)
         {
             firebool = true;
             m_animator.SetTrigger("Attack");
+            curbullet--;
             GameObject missile = Instantiate(missilePrefab, bullet_position.transform.position, transform.rotation);
         }
         else
@@ -165,7 +213,8 @@ public class Player : MonoBehaviour {
 
     void Roll_Delay()
     {
-        roll_speed = 1;
+        transform.position = new Vector2(transform.position.x + (5 * m_facingDirection), transform.position.y);
+        m_body2d.velocity = Vector2.zero;
         m_rolling = false;
     }
 
@@ -182,6 +231,16 @@ public class Player : MonoBehaviour {
             isJump = false;
         }
         
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "BossMissile" && CurHp > 0)
+        {
+            CurHp -= 20;
+            player_body.material.color = Color.red;
+            Invoke("Color_delay", 1);
+        }
     }
 
     void Color_delay()
