@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bullet
   - BossMissile
+  - Bolt
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
     public GameObject bullet_position;
+    public GameObject bolt_position;
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
@@ -38,7 +39,9 @@ public class Player : MonoBehaviour {
     public int curbullet;
 
     bool reload;
+    bool skill1ready=true;
 
+    public GameObject boltPrefab;
     public GameObject missilePrefab;
     Renderer player_body;
 
@@ -161,17 +164,24 @@ public class Player : MonoBehaviour {
 
     void Skill1()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        
+        if (Input.GetKey(KeyCode.E)&&skill1ready && curbullet>5 && !isJump)
         {
             m_body2d.velocity = Vector2.zero;
             m_animator.SetBool("Razer_Skill",true);
             skillcnt += 0.01f;
+            if (skillcnt >= 10)
+            {
+                m_animator.SetBool("Razer_Skill", false);
+                m_animator.SetTrigger("Razer_Fire");
+                GameObject missile = Instantiate(boltPrefab, bolt_position.transform.position, transform.rotation);
+                curbullet -= 5;
+                skillcnt = 0;
+                skill1ready = false;
+                Invoke("Razer_Delay",3);
+            }
         }
-        if (skillcnt == 10)
-        {
-            m_animator.SetTrigger("Razer_Fire");
-            skillcnt = 0;
-        }
+        
         else if (Input.GetKeyUp(KeyCode.E))
         {
             m_animator.SetBool("Razer_Skill", false);
@@ -194,6 +204,11 @@ public class Player : MonoBehaviour {
     {
         curbullet++;
         reload = false;
+    }
+
+    void Razer_Delay()
+    {
+        skill1ready = true;
     }
 
     void Attack()

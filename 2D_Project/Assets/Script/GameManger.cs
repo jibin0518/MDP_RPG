@@ -7,6 +7,7 @@ public class GameManger : MonoBehaviour
 {
     public Player player;
     public Bullet bullet;
+    public Bolt bolt;
     //public Boss boss;
     /*public Image a;
     public Image d;
@@ -33,10 +34,12 @@ public class GameManger : MonoBehaviour
         if (player.GetComponent<SpriteRenderer>().flipX)
         {
             bullet.bulletDirection = -1;
+            bolt.bulletDirection = -1;
         }
         else
         {
             bullet.bulletDirection = 1;
+            bolt.bulletDirection = 1;
         }
     }
     /*void PlayerMove()
