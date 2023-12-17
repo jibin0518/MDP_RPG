@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Timeline;
+
 using UnityEngine;
-using UnityEngine.SubsystemsImplementation;
 
 public class Boss : MonoBehaviour
 {
@@ -18,16 +14,24 @@ public class Boss : MonoBehaviour
     public GameObject bim2;
     public GameObject bimWarring;
 
+    public GameObject victory;
+
+    public float maxhp = 500;
+    public float curhp = 500;
+    Renderer bosscolor;
+
     void Start()
     {
         player = GetComponent<Player>();
+        bosscolor = gameObject.GetComponent<Renderer>();
     }
 
     void Update()
     {
         int mod;
 
-        if (skill)
+        Death();
+        if (skill && curhp>=120)
         {
             mod = Random.Range(0,3);
             Debug.Log(mod);
@@ -53,6 +57,20 @@ public class Boss : MonoBehaviour
                     break;
             }
         }
+    }
+
+    void Death()
+    {
+        if (curhp <= 150)
+        {
+            victory.SetActive(true);
+            Invoke("Out",2f);
+        }
+    }
+
+    void Out()
+    {
+        Application.Quit();
     }
 
     void Fire()
@@ -85,6 +103,28 @@ public class Boss : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             Attack_Warring[i].SetActive(false);
+        }
+    }
+
+    void Color_delay()
+    {
+        bosscolor.material.color = Color.white;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Bullet")
+        {
+            curhp -= 5;
+            bosscolor.material.color = Color.red;
+            Invoke("Color_delay", 1);
+        }
+
+        if (collision.gameObject.tag == "Bolt")
+        {
+            curhp -= 15;
+            bosscolor.material.color = Color.red;
+            Invoke("Color_delay", 1);
         }
     }
 }

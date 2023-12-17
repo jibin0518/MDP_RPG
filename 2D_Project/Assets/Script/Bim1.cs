@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bim1 : MonoBehaviour
@@ -8,6 +5,7 @@ public class Bim1 : MonoBehaviour
     public float speed = 20f;  // 미사일 이동 속도
     private float lifetime = 1.5f;  // 미사일 수명 (초)
     private float spawnTime;  // 미사일 생성 시간
+    public int bulletDirection;
     public int BossBimDirection;
     //public Player player;
 
@@ -18,6 +16,14 @@ public class Bim1 : MonoBehaviour
 
     void Update()
     {
+        if (bulletDirection == 1)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (bulletDirection == -1)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
         transform.position += new Vector3(speed * Time.deltaTime * 1, 0, 0);
 
         if (Time.time - spawnTime > lifetime)
@@ -30,6 +36,10 @@ public class Bim1 : MonoBehaviour
     {
 
         if (collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Bolt")
         {
             Destroy(gameObject);
         }

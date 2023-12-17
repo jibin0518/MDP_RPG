@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -14,6 +10,7 @@ public class Player : MonoBehaviour {
     [SerializeField] GameObject m_slideDust;
     public GameObject bullet_position;
     public GameObject bolt_position;
+    public GameObject GameOver_Panel;
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
@@ -31,12 +28,15 @@ public class Player : MonoBehaviour {
     public float CurHp = 100;
     public float MaxHp = 100;
 
-    public bool deathing;
+    public bool deathing = true;
 
     public bool isJump;
 
     public int maxbullet;
     public int curbullet;
+
+    public GameObject leftwall;
+    public GameObject rightwall;
 
     bool reload;
     bool skill1ready=true;
@@ -61,7 +61,15 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        if (deathing)
+        {
+            Live();
+        }
 
+    }
+
+    void Live()
+    {
         if (CurHp > 0)
         {
             deathing = true;
@@ -70,7 +78,7 @@ public class Player : MonoBehaviour {
         m_timeSinceAttack += Time.deltaTime;
 
         // Increase timer that checks roll duration
-        if(m_rolling)
+        if (m_rolling)
             m_rollCurrentTime += Time.deltaTime;
 
         //Check if character just landed on the ground
@@ -97,7 +105,7 @@ public class Player : MonoBehaviour {
             m_facingDirection = 1;
             m_animator.SetFloat("Move", inputX);
         }
-            
+
         else if (inputX < 0 && deathing)
         {
             GetComponent<SpriteRenderer>().flipX = true;
@@ -113,10 +121,13 @@ public class Player : MonoBehaviour {
         m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
 
         //Death
-        if (CurHp<=0 && deathing)
+        if (CurHp <= 0 && deathing)
         {
             m_animator.SetTrigger("Death");
             deathing = false;
+            GameOver_Panel.SetActive(true);
+            Invoke("AppQuit",2f);
+            
         }
 
         Attack();
@@ -124,14 +135,14 @@ public class Player : MonoBehaviour {
         Skill1();
 
         // Roll
-        if (Input.GetKeyDown("left shift") && !m_rolling)
+        if (Input.GetKeyDown("left shift") && !m_rolling && leftwall.transform.position.x + 5 < transform.position.x && rightwall.transform.position.x-5>transform.position.x)
         {
             m_body2d.velocity = Vector2.zero;
             m_animator.SetTrigger("Roll");
             m_rolling = true;
             Invoke("Roll_Delay", 0.3f);
         }
-            
+
 
         //Jumpf
         if (Input.GetKeyDown("space") && m_grounded && !m_rolling && !isJump)
@@ -157,9 +168,14 @@ public class Player : MonoBehaviour {
         {
             // Prevents flickering transitions to idle
             m_delayToIdle -= Time.deltaTime;
-                if(m_delayToIdle < 0)
-                    m_animator.SetInteger("AnimState", 0);
+            if (m_delayToIdle < 0)
+                m_animator.SetInteger("AnimState", 0);
         }
+    }
+
+    void AppQuit()
+    {
+        Application.Quit();
     }
 
     void Skill1()
@@ -169,7 +185,7 @@ public class Player : MonoBehaviour {
         {
             m_body2d.velocity = Vector2.zero;
             m_animator.SetBool("Razer_Skill",true);
-            skillcnt += 0.01f;
+            skillcnt += 0.1f;
             if (skillcnt >= 10)
             {
                 m_animator.SetBool("Razer_Skill", false);
@@ -235,9 +251,9 @@ public class Player : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "BossMissile" && CurHp > 0)
+        if (collision.gameObject.tag == "BossMissile" && CurHp > 0 || collision.gameObject.tag == "Enemy")
         {
-            CurHp -= 20;
+            CurHp -= 12;
             player_body.material.color = Color.red;
             Invoke("Color_delay", 1);
         }
